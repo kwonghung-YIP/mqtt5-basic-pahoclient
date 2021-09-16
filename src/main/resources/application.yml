@@ -16,3 +16,9 @@ spring:
     activate:
       on-profile:
       - docker-compose
+      
+mqtt:
+  broker-url: tcp://hivemq:1883
+  username: user1
+  password: hm93bqCj6xR562U
+  topic-filter: request/echo      
