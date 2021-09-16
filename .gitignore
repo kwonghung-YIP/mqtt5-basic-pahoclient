@@ -1,6 +1,7 @@
 #HELP.md
 target/
 springboot-mock*/
+springboot_paho*/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/

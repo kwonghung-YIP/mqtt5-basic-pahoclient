@@ -1,5 +1,12 @@
-#mqtt:
-#  broker-url: tcp://localhost:1883
+simple-echo:
+  client-id: springboot_paho_${random.value}
+  topic-filter: request/echo
+
+measure-latency:
+  client-id: springboot_paho_${random.value}
+  topic: measure/latency
+  fixed-rate: 1000
+  
 ---
 spring:
   config:    activate:      on-profile:      - default
@@ -8,7 +15,6 @@ mqtt:
   broker-url: tcp://localhost:1883
   username: user1
   password: hm93bqCj6xR562U
-  topic-filter: request/echo
 
 ---
 spring:
@@ -21,4 +27,7 @@ mqtt:
   broker-url: tcp://hivemq:1883
   username: user1
   password: hm93bqCj6xR562U
-  topic-filter: request/echo      
+  
+measure-latency:
+  fixed-rate: 500  
+   
