@@ -72,6 +72,9 @@
 					<to>
 						<image>docker.io/kwonghung/mqtt-basic-pahoclient</image>
 					</to>
+					<!-- <container>
+						<jvmFlag>-Duser.timezone=GMT+08</jvmFlag>
+					</container> -->
 				</configuration>
 			</plugin>
 		</plugins>

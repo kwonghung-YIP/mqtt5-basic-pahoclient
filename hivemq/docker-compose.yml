@@ -28,6 +28,7 @@ services:
   pahoclient:
     image: kwonghung/mqtt-basic-pahoclient:latest
     environment:
+      TZ: Asia/Hong_Kong
       SPRING_PROFILES_ACTIVE: docker-compose
 
 #volumes:
