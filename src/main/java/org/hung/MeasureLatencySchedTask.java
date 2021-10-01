@@ -22,6 +22,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.util.MimeTypeUtils;
+import org.springframework.util.StringUtils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -43,10 +44,10 @@ public class MeasureLatencySchedTask {
 		@Value("${mqtt.broker-url}")
 		private String brokerUrl;
 
-		@Value("${mqtt.username}")
+		@Value("${mqtt.username:}")
 		private String username;
 		
-		@Value("${mqtt.password}")
+		@Value("${mqtt.password:}")
 		private String password;
 
 		@Bean(name="latencyMqttClient")
@@ -55,8 +56,10 @@ public class MeasureLatencySchedTask {
 			MqttAsyncClient client = new MqttAsyncClient(brokerUrl, clientId);
 			
 			MqttConnectionOptions options = new MqttConnectionOptions();
-			options.setUserName(username);
-			options.setPassword(password.getBytes(StandardCharsets.UTF_8));
+			if (StringUtils.hasText(username) || StringUtils.hasText(password)) {
+				options.setUserName(username);
+				options.setPassword(password.getBytes(StandardCharsets.UTF_8));
+			}
 			
 			client.setCallback(new MqttCallback() {
 				

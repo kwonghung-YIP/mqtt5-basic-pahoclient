@@ -15,6 +15,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.util.StringUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,10 +29,10 @@ public class SimpleEchoService {
 	@Value("${mqtt.broker-url}")
 	private String brokerUrl;
 
-	@Value("${mqtt.username}")
+	@Value("${mqtt.username:}")
 	private String username;
 	
-	@Value("${mqtt.password}")
+	@Value("${mqtt.password:}")
 	private String password;
 
 	@Value("${simple-echo.topic-filter}")
@@ -83,8 +84,10 @@ public class SimpleEchoService {
 			});
 			
 			MqttConnectionOptions options = new MqttConnectionOptions();
-			options.setUserName(username);
-			options.setPassword(password.getBytes(StandardCharsets.UTF_8));
+			if (StringUtils.hasText(username) || StringUtils.hasText(password)) {
+				options.setUserName(username);
+				options.setPassword(password.getBytes(StandardCharsets.UTF_8));
+			}
 			client.connect(options);
 			
 			client.subscribe(topicFilter,2);

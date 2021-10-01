@@ -9,13 +9,23 @@ measure-latency:
   
 ---
 spring:
-  config:    activate:      on-profile:      - default
+  config:    activate:      on-profile:      - hivemq-local
 
 mqtt:
   broker-url: tcp://localhost:1883
   username: user1
   password: hm93bqCj6xR562U
 
+---
+spring:
+  config:
+    activate:
+      on-profile:
+      - solace-local
+
+mqtt:
+  broker-url: tcp://localhost:1883
+  
 ---
 spring:
   config:

@@ -13,16 +13,16 @@ services:
       - "HIVEMQ_ALLOW_ALL_CLIENTS=false"
     volumes:
       - type: bind
-        source: conf/config.xml
+        source: ./conf/config.xml
         target: /opt/hivemq-4.6.4/conf/config.xml
       - type: bind
-        source: conf/my-service.jks
+        source: ./conf/my-service.jks
         target: /opt/hivemq-4.6.4/conf/keystore.jks
       - type: bind
-        source: extensions/hivemq-mqtt-message-log-extension
+        source: ./extensions/hivemq-mqtt-message-log-extension
         target: /opt/hivemq-4.6.4/extensions/hivemq-mqtt-message-log-extension
       - type: bind
-        source: extensions/hivemq-file-rbac-extension
+        source: ./extensions/hivemq-file-rbac-extension
         target: /opt/hivemq-4.6.4/extensions/hivemq-file-rbac-extension
   
   pahoclient:
@@ -30,6 +30,9 @@ services:
     environment:
       TZ: Asia/Hong_Kong
       SPRING_PROFILES_ACTIVE: docker-compose
+    depends_on:
+      - hivemq
+    restart: unless-stopped
 
 #volumes:
 #  conf/config.xml:
