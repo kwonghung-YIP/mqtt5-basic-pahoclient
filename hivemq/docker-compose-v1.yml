@@ -1,0 +1,45 @@
+version: "3.9"
+services:
+  hivemq:
+    image: hivemq/hivemq4
+    ports:
+      - "8080:8080"
+      - "1883:1883"
+      - "8000:8000"
+      - "8001:8001"
+    environment:
+      #- "HIVEMQ_HOME=/opt/hivemq-4.6.4"
+      - "HIVEMQ_LOG_LEVEL=DEBUG"
+      - "HIVEMQ_ALLOW_ALL_CLIENTS=false"
+    volumes:
+      - type: bind
+        source: ./conf/config.xml
+        target: /opt/hivemq-4.6.4/conf/config.xml
+      - type: bind
+        source: ./conf/my-service.jks
+        target: /opt/hivemq-4.6.4/conf/selfsign.jks
+      - type: bind
+        source: ./extensions/hivemq-mqtt-message-log-extension
+        target: /opt/hivemq-4.6.4/extensions/hivemq-mqtt-message-log-extension
+      - type: bind
+        source: ./extensions/hivemq-file-rbac-extension
+        target: /opt/hivemq-4.6.4/extensions/hivemq-file-rbac-extension
+  
+  pahoclient:
+    image: kwonghung/mqtt-basic-pahoclient:latest
+    environment:
+      TZ: Asia/Hong_Kong
+      SPRING_PROFILES_ACTIVE: docker-compose
+    depends_on:
+      - hivemq
+    restart: unless-stopped
+
+#volumes:
+#  conf/config.xml:
+
+
+
+
+#-v %WORKDIR%/hivemq-extensions/hivemq-mqtt-message-log-extension:%HIVEMQ_HOME%/extensions/hivemq-mqtt-message-log-extension 
+#-v %WORKDIR%/hivemq-extensions/hivemq-file-rbac-extension:%HIVEMQ_HOME%/extensions/hivemq-file-rbac-extension 
+

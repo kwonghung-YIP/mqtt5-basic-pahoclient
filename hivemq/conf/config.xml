@@ -30,7 +30,7 @@
           <allow-extensions>true</allow-extensions>
            <tls>
                <keystore>
-                   <path>/opt/hivemq-4.6.4/conf/keystore.jks</path>
+                   <path>/opt/hivemq/conf/selfsign.jks</path>
                    <password>changeit</password>
                    <private-key-password>changeit</private-key-password>
                </keystore>
