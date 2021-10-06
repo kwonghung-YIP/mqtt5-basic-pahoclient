@@ -22,3 +22,7 @@ con -ws -h hivemq4 -p 8000
 con -ws -h hivemq4 -p 8001 -s --cafile /cafile.pem --capath /
 
 docker run -it hivemq/mqtt-cli con -v -h 1c3b21dd0317425d916b4ed67fcd4309.s1.eu.hivemq.cloud -p 8883 -u user1 -pw hm93bqCj6xR562U
+
+docker run -it hivemq/mqtt-cli shell
+con -h 192.168.43.217 -p 1883 -u user1 -pw hm93bqCj6xR562U
+pub -t public/odds/20211001ST/ra/0/win/4 -m "ABC"
