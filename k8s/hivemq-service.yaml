@@ -61,7 +61,7 @@ spec:
             value: DEBUG
         volumeMounts:
         - name: jks-keystore
-          mountPath: "/opt/hivemq-4.7.1/conf"
+          mountPath: "/usr/local/secrets/jks-keystore"
           readOnly: true
 
       volumes:
@@ -70,5 +70,6 @@ spec:
           secretName: hivemq4-selfsigned-secret
           items:
             - key: keystore.jks
-              path: keystore.jks
+              path: conf/keystore.jks
+
       
