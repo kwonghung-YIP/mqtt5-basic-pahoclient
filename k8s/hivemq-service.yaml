@@ -70,6 +70,6 @@ spec:
           secretName: hivemq4-selfsigned-secret
           items:
             - key: keystore.jks
-              path: conf/keystore.jks
+              path: /opt/hivemq-4.7.1/conf/keystore.jks
 
       
