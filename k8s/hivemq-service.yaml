@@ -61,7 +61,7 @@ spec:
             value: DEBUG
         volumeMounts:
         - name: jks-keystore
-          mountPath: "/opt/hivemq-4.7.1"
+          mountPath: "/opt/hivemq-4.7.1/conf"
           readOnly: true
 
       volumes:
