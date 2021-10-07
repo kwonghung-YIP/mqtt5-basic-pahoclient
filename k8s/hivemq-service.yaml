@@ -8,15 +8,19 @@ spec:
     app: hivemq4
     ver: 4.7.1
   ports:
-  - port: 8080
+  - name: admin-console
+    port: 8080
     targetPort: 8080
-  - port: 1883
+  - name: mqtt-tcp
+    port: 1883
     targetPort: 1883
-  - port: 8000
+  - name: mqtt-ws
+    port: 8000
     targetPort: 8000
-  - port: 8001
+  - name: mqtt-wss
+    port: 8001
     targetPort: 8001
-    
+
 ---
 apiVersion: apps/v1
 kind: Deployment
