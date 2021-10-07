@@ -39,7 +39,7 @@ spec:
     spec:
       containers:
       - name: hivemq4
-        image: hivemq/hivemq4:k8s-4.7.1
+        image: hivemq/hivemq4:4.7.1
         resources:
           requests:
             memory: "32Mi"
