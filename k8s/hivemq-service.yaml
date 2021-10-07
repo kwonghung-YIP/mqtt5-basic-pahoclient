@@ -59,3 +59,16 @@ spec:
         env:
           - name: HIVEMQ_LOG_LEVEL
             value: DEBUG
+        volumeMounts:
+        - name: jks-keystore
+          mountPath: "/opt/hivemq-4.7.1"
+          readOnly: true
+
+      volumes:
+      - name: jks-keystore
+        secret:
+          secretName: hivemq4-selfsigned-secret
+          items:
+            - key: keystore.jks
+              path: keystore.jks
+      
