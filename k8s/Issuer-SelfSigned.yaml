@@ -7,18 +7,42 @@ spec:
   selfSigned: {}
 
 ---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: keystore-password-secret
+  namespace: default
+type: Opaque
+data:
+  jks-password: Y2hhbmdlaXQ=
+  p12-password: Y2hhbmdlaXQ=
+
+---
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: hivemq4-selfsigned-cert
   namespace: default
 spec:
+  secretName: hivemq4-selfsigned-secret
   isCA: true
   commonName: hung.local
-  secretName: hivemq4-selfsigned-secret
+  duration: 2h
+  renewBefore: 30m
   privateKey:
     algorithm: ECDSA
     size: 256
   issuerRef:
     name: selfsigned-issuer
     kind: Issuer
+  keystores:
+    jks:
+      create: true
+      passwordSecretRef:
+        key: jks-password
+        name: keystore-password-secret
+    pkcs12:
+      create: true
+      passwordSecretRef:
+        key: p12-password
+        name: keystore-password-secret
