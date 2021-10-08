@@ -1,0 +1,18 @@
+apiVersion: skaffold/v2beta24
+kind: Config
+build:
+  artifacts:
+  - image: docker.io/kwonghung/hivemq4
+    context: ./hivemq
+    docker:
+      dockerfile: Dockerfile-k8s
+  tagPolicy:
+    sha256: {}
+  local:
+    push: true
+    useBuildkit: true
+deploy:
+  kubectl:
+    manifests:
+    - k8s/Issuer-SelfSigned.yaml
+    - k8s/hivemq-service.yaml

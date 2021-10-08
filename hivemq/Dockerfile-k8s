@@ -1,0 +1,6 @@
+FROM hivemq/hivemq4:4.7.1
+ARG HIVEMQ_HOME=/opt/hivemq-4.7.1
+EXPOSE 8080/TCP 1883/TCP 8000/TCP 8001/TCP
+ADD conf/config-k8s.xml ${HIVEMQ_HOME}/conf/config.xml
+ADD extensions/hivemq-file-rbac-extension/ ${HIVEMQ_HOME}/extensions/hivemq-file-rbac-extension/
+ADD extensions/hivemq-mqtt-message-log-extension/ ${HIVEMQ_HOME}/extensions/hivemq-mqtt-message-log-extension/

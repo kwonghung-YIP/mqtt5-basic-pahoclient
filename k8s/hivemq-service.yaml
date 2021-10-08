@@ -39,7 +39,7 @@ spec:
     spec:
       containers:
       - name: hivemq4
-        image: hivemq/hivemq4:4.7.1
+        image: docker.io/kwonghung/hivemq4:4.7.1
         resources:
           requests:
             memory: "64Mi"
@@ -63,9 +63,6 @@ spec:
         - name: jks-keystore
           mountPath: "/opt/hivemq-4.7.1/certs"
           readOnly: true
-        - name: config
-          mountPath: "/opt/hivemq-4.7.1"
-          subPath: conf
 
       volumes:
       - name: jks-keystore
@@ -74,70 +71,5 @@ spec:
           items:
             - key: keystore.jks
               path: selfsigned.jks
-      - name: config
-        configMap:
-          name: hivemq4-config
-          items:
-            - key: config.xml
-              path: config.xml
-
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: hivemq4-config
-data:
-  config.xml: |-
-    <?xml version="1.0"?>
-    <hivemq xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:noNamespaceSchemaLocation="hivemq-config.xsd">
-        <listeners>
-            <tcp-listener>
-                <port>1883</port>
-                <bind-address>0.0.0.0</bind-address>
-            </tcp-listener>
-            <websocket-listener>
-                <port>8000</port>
-                <bind-address>0.0.0.0</bind-address>
-                <path>/mqtt</path>
-                <name>my-websocket-listener</name>
-                <subprotocols>
-                    <subprotocol>mqttv3.1</subprotocol>
-                    <subprotocol>mqtt</subprotocol>
-                </subprotocols>
-                <allow-extensions>true</allow-extensions>
-            </websocket-listener>
-            <tls-websocket-listener>
-              <port>8001</port>
-              <bind-address>0.0.0.0</bind-address>
-              <name>my-secure-websocket-listener</name>
-              <path>/mqtt</path>
-              <subprotocols>
-                <subprotocol>mqttv3.1</subprotocol>
-                <subprotocol>mqtt</subprotocol>
-              </subprotocols>
-              <allow-extensions>true</allow-extensions>
-              <tls>
-                <keystore>
-                  <path>/opt/hivemq/certs/selfsigned.jks</path>
-                  <password>changeit</password>
-                  <private-key-password>changeit</private-key-password>
-                </keystore>
-                <client-authentication-mode>NONE</client-authentication-mode>
-              </tls>
-            </tls-websocket-listener>
-        </listeners>
-        <!--REST-API-CONFIGURATION-->
-
-        <control-center>
-            <listeners>
-                <http>
-                    <port>8080</port>
-                    <bind-address>0.0.0.0</bind-address>
-                </http>
-            </listeners>
-        </control-center>
-    </hivemq>
-
   
       
