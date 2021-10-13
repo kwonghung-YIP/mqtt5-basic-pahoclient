@@ -5,6 +5,10 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: haproxy
 spec:
+  tls:
+    - hosts:
+      - kwonghung-yip.asuscomm.com
+      secretName: letsencrypt-prod-secret
   rules:
     - host: kwonghung-yip.asuscomm.com
       http:  

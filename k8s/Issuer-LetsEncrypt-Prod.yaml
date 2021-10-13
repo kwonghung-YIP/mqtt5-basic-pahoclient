@@ -1,0 +1,31 @@
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: letsencrypt-prod-issuer
+  namespace: default
+spec:
+  acme:
+    email: kwonghung.yip@gmail.com
+    server: https://acme-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: letsencrypt-prod-priv-key-secret
+    solvers:
+    - http01:
+        ingress:
+          class: haproxy
+
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: letsencrypt-prod-cert
+  namespace: default
+spec:
+  issuerRef:
+    name: letsencrypt-prod-issuer
+    kind: Issuer
+  secretName: letsencrypt-prod-secret
+  commonName: kwonghung-yip.asuscomm.com
+  dnsNames:
+  - kwonghung-yip.asuscomm.com
+
