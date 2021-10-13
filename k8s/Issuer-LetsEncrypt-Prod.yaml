@@ -15,6 +15,17 @@ spec:
           class: haproxy
 
 ---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: letsencrypt-prod-keystore-secret
+  namespace: default
+type: Opaque
+data:
+  jks-password: Y2hhbmdlaXQ=
+  p12-password: Y2hhbmdlaXQ=
+
+---
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
@@ -28,4 +39,16 @@ spec:
   commonName: kwonghung-yip.asuscomm.com
   dnsNames:
   - kwonghung-yip.asuscomm.com
+
+  keystores:
+    jks:
+      create: true
+      passwordSecretRef:
+        key: jks-password
+        name: letsencrypt-prod-keystore-secret
+    pkcs12:
+      create: true
+      passwordSecretRef:
+        key: p12-password
+        name: letsencrypt-prod-keystore-secret
 

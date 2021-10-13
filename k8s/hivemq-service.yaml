@@ -67,7 +67,7 @@ spec:
       volumes:
       - name: jks-keystore
         secret:
-          secretName: hivemq4-selfsigned-secret
+          secretName: letsencrypt-prod-secret
           items:
             - key: keystore.jks
               path: selfsigned.jks

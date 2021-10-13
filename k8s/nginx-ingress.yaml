@@ -10,16 +10,16 @@ spec:
       - kwonghung-yip.asuscomm.com
       secretName: letsencrypt-prod-secret
   rules:
-    - host: kwonghung-yip.asuscomm.com
-      http:  
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: nginx-service
-                port: 
-                  number: 80
+  - host: kwonghung-yip.asuscomm.com
+    http:  
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: nginx-service
+            port: 
+              number: 80
 
 ---
 apiVersion: v1
@@ -71,18 +71,48 @@ spec:
         - name: https
           containerPort: 443
         volumeMounts:
-          - name: config-volume
-            mountPath: /usr/share/nginx/html 
+          - name: nginx-content
+            mountPath: /usr/share/nginx/my-content
+          - name: nginx-config
+            mountPath: /etc/nginx/conf.d
       volumes:
-      - name: config-volume
+      - name: nginx-content
         configMap:
-          name: nginx-configmap 
+          name: nginx-content 
+      - name: nginx-config
+        configMap:
+          name: nginx-config
 
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: nginx-configmap
+  name: nginx-content
 data:
   test.txt: |
     Test page for kwonghung-yip.asuscomm.com
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+data:
+  default.conf: |
+    server {
+      listen 80;
+      listen [::]:80;
+      server_name localhost;
+
+      location / {
+        root  /usr/share/nginx/my-content;
+        index index.html index.htm;
+      }
+
+      error_page 500 502 503 /50x.html;
+      location = /50x.html {
+        root /usr/share/nginx/html;
+      }
+    }
+
+
