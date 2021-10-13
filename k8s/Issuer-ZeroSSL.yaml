@@ -1,0 +1,44 @@
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: zerossl-issuer
+  namespace: default
+
+# Ref
+# https://medium.com/@markmcwhirter/alternative-acme-via-cert-manager-a9e9e7f105e0
+# 
+spec:
+  acme:
+    email: kwonghung.yip@gmail.com
+    server: https://acme.zerossl.com/v2/DV90
+    privateKeySecretRef:
+      name: zerossl-priv-key-secret
+    externalAccountBinding:
+      keyID: cdeEhbPE8zYiGujknHelHw
+      keySecretRef:
+        name: eab-secret
+        key: secret
+    solvers:
+    - http01:
+        ingress:
+          class: nginx
+
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: zerossl-acme-cert
+  namespace: default
+spec:
+  issuerRef:
+    name: zerossl-issuer
+    kind: Issuer
+  secretName: zerossl-acme-secret
+  commonName: kwonghung-yip.asuscomm.com
+  dnsNames:
+  - kwonghung-yip.asuscomm.com
+  emailAddresses:
+  - kwonghung.yip@gmail.com
+
+
+
