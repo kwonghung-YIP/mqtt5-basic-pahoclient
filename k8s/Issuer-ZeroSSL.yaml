@@ -21,7 +21,7 @@ spec:
     solvers:
     - http01:
         ingress:
-          class: nginx
+          class: haproxy
 
 ---
 apiVersion: cert-manager.io/v1
