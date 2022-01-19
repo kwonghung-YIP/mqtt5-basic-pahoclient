@@ -49,3 +49,10 @@ kubectl --namespace default create ingress echoserver\
 
 curl -k http://192.168.142.72 -H "host: 192.168.142.72.nip.io"
 
+docker run -d --name=solace-standard\
+  -p 8080:8080 -p 55555:55555 \
+  -p 1883:1883 -p 8000:8000 -p 8:443
+  --shm-size=1g \
+  --env username_admin_globalaccesslevel=admin \
+  --env username_admin_password=admin \
+  solace/solace-pubsub-standard
